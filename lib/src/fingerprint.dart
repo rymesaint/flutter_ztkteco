@@ -41,10 +41,11 @@ class Fingerprint {
 
     if (data?.isNotEmpty == true) {
       int templateSize = data!.length;
-      String prefix = String.fromCharCode(templateSize % 256) +
-          String.fromCharCode((templateSize / 256).roundToDouble().toInt()) +
-          commandString +
-          String.fromCharCode(0x01);
+      /** TODO : Need documentation more */
+      // String prefix = String.fromCharCode(templateSize % 256) +
+      //     String.fromCharCode((templateSize / 256).roundToDouble().toInt()) +
+      //     commandString +
+      //     String.fromCharCode(0x01);
       // data = prefix + data;
       if (data.isNotEmpty) {
         result['size'] = templateSize;

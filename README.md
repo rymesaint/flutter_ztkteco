@@ -115,13 +115,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  FingerprintMachine fingerprintMachine;
+  ZKTeco fingerprintMachine;
   List<AttendanceLog> logs = [];
 
   @override
   void initState() {
     super.initState();
-    fingerprintMachine = FingerprintMachine(ipAddress: '192.168.1.201', port: 4370);
+    fingerprintMachine = ZKTeco('192.168.1.201', port: 4370);
   }
 
   Future<void> connectAndFetchLogs() async {
@@ -171,9 +171,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ## API
 
-### `FingerprintMachine`
+### `ZKTeco`
 
-- `FingerprintMachine({required String ipAddress, required int port})`
+- `ZKTeco(String ipAddress,{int port = 4370})`
   - Creates an instance of the fingerprint machine with the specified IP address and port.
 
 - `Future<bool> connect()`

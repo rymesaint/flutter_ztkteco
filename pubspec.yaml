@@ -1,5 +1,5 @@
 name: flutter_zkteco
-description: "A new Flutter package project."
+description: "A Flutter plugin to interface with fingerprint machines and retrieve attendance data, user information, and other related records."
 version: 1.0.0
 homepage: https://github.com/rymesaint/flutter_ztkteco
 

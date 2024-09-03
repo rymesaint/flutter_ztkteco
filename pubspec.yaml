@@ -1,7 +1,7 @@
 name: flutter_zkteco
 description: "A new Flutter package project."
 version: 1.0.0
-homepage:
+homepage: https://github.com/rymesaint/flutter_ztkteco
 
 environment:
   sdk: '>=3.4.4 <4.0.0'

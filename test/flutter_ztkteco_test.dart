@@ -89,6 +89,15 @@ void main() async {
     await fingerMachine.disconnect();
   });
 
+  test('set datetime', () async {
+    final fingerMachine = ZKTeco("10.7.0.53");
+    await fingerMachine.initSocket();
+    await fingerMachine.connect();
+    dynamic time = await fingerMachine.setTime(DateTime.now());
+    expect(time is String, true);
+    await fingerMachine.disconnect();
+  });
+
   test('get SSR', () async {
     final fingerMachine = ZKTeco("10.7.0.53");
     await fingerMachine.initSocket();

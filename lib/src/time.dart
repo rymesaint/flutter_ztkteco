@@ -49,6 +49,8 @@ class Time {
 
     String bin2hexString = Util.bin2hex(reply);
     String reverseHex = Util.reverseHex(bin2hexString);
-    return Util.decodeTime(int.parse(reverseHex));
+    Uint8List reverseHexBytes = Util.hex2bin(reverseHex);
+    int time = reverseHexBytes.buffer.asByteData().getUint32(0, Endian.big);
+    return Util.decodeTime(time);
   }
 }

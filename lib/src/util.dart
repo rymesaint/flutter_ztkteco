@@ -165,7 +165,7 @@ class Util {
     StringBuffer sb = StringBuffer();
     for (int i = hex.length; i > 0; i -= 2) {
       String value = hex.substring(i - 2, i);
-      sb.write(int.parse(value, radix: 16));
+      sb.write(value);
     }
     return sb.toString();
   }

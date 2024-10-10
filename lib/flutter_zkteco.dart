@@ -30,7 +30,8 @@ class ZKTeco {
   int sessionId = 0;
 
   // Constructor for ZKTeco
-  ZKTeco(this.ip, {this.port = 4370, this.timeout = const Duration(seconds: 10)});
+  ZKTeco(this.ip,
+      {this.port = 4370, this.timeout = const Duration(seconds: 10)});
 
   /// Initializes the socket connection to the device.
   ///
@@ -212,20 +213,93 @@ class ZKTeco {
   /// be queried.
   Future<dynamic> getDeviceName() => Device.name(this);
 
+  /// Enables the device.
+  ///
+  /// This method sends a command to the device to enable it. The device must
+  /// be connected and authenticated before this method can be used.
+  ///
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the device was successfully enabled, or a [String] containing an error
+  /// message if the device could not be enabled.
+  ///
+  /// If the device is already enabled, this method does nothing and returns
+  /// [true].
   Future<dynamic> enableDevice() => Device.enable(this);
 
+  /// Disables the device.
+  //
+  /// This method sends a command to the device to disable it. The device must
+  /// be connected and authenticated before this method can be used.
+  //
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the device was successfully disabled, or a [String] containing an error
+  /// message if the device could not be disabled.
+  //
+  /// If the device is already disabled, this method does nothing and returns
+  /// [true].
   Future<dynamic> disableDevice() => Device.disable(this);
 
+  /// Powers off the device.
+  ///
+  /// This method sends a command to the device to power it off. The device must
+  /// be connected and authenticated before this method can be used.
+  ///
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the device was successfully powered off, or a [String] containing an error
+  /// message if the device could not be powered off.
   Future<dynamic> powerOff() => Device.powerOff(this);
 
+  /// Restarts the device.
+  ///
+  /// This method sends a command to the device to restart it. The device must
+  /// be connected and authenticated before this method can be used.
+  ///
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the device was successfully restarted, or a [String] containing an error
+  /// message if the device could not be restarted.
   Future<dynamic> restart() => Device.restart(this);
 
+  /// Puts the device into sleep mode.
+  ///
+  /// This method sends a command to the device to put it into sleep mode. The
+  /// device must be connected and authenticated before this method can be
+  /// used.
+  ///
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the device was successfully put into sleep mode, or a [String] containing
+  /// an error message if the device could not be put into sleep mode.
   Future<dynamic> sleep() => Device.sleep(this);
 
+  /// Resumes the device from sleep mode.
+  ///
+  /// This method sends a command to the device to resume from sleep mode. The
+  /// device must be connected and authenticated before this method can be
+  /// used.
+  ///
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the device was successfully resumed from sleep mode, or a [String]
+  /// containing an error message if the device could not be queried.
   Future<dynamic> resume() => Device.resume(this);
 
+  /// Tests the voice of the device.
+  ///
+  /// This method sends a command to the device to test its voice. The device
+  /// must be connected and authenticated before this method can be used.
+  ///
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the voice was successfully tested, or a [String] containing an error
+  /// message if the device could not be queried.
   Future<dynamic> testVoice() => Device.testVoice(this);
 
+  /// Clears the device's LCD display.
+  ///
+  /// This method sends a command to the device to clear its LCD display. The
+  /// device must be connected and authenticated before this method can be
+  /// used.
+  ///
+  /// The method returns a [Future] that completes with a [bool] indicating if
+  /// the device's LCD was successfully cleared, or a [String] containing an
+  /// error message if the device could not be queried.
   Future<dynamic> clearDisplay() => Device.clearLCD(this);
 
   /// Writes a line of text to the device's LCD display.
@@ -246,8 +320,27 @@ class ZKTeco {
   Future<dynamic> writeDisplay(int rank, String text) =>
       Device.writeLCD(this, rank, text);
 
+  /// Retrieves the operating system of the device as a [String].
+  ///
+  /// This method sends a command to the device to retrieve its operating
+  /// system. The device must be connected and authenticated before this
+  /// method can be used.
+  ///
+  /// The method returns a [Future] that completes with a [String] containing
+  /// the operating system of the device, or a [bool] indicating if the device
+  /// could not be queried.
   Future<dynamic> getOS() => Os.get(this);
 
+  /// Retrieves the current time of the device as a [String] in the format
+  /// "YYYY-MM-DD HH:MM:SS".
+  ///
+  /// This method sends a command to the device to retrieve its current time.
+  /// The device must be connected and authenticated before this method can be
+  /// used.
+  ///
+  /// The method returns a [Future] that completes with a [String] containing
+  /// the current time of the device, or a [bool] indicating if the device
+  /// could not be queried.
   Future<dynamic> getTime() => Time.get(this);
 
   /// Sets the device's time to the given [DateTime].
@@ -267,6 +360,16 @@ class ZKTeco {
   /// queried.
   Future<dynamic> getSsr() => Ssr.get(this);
 
+  /// Retrieves a fingerprint from the device with the given [uid].
+  ///
+  /// This method sends a command to the device to retrieve a fingerprint. The
+  /// device must be connected and authenticated before this method can be
+  /// used.
+  ///
+  /// The method returns a [Future] that completes with a [Map] containing the
+  /// fingerprint data, or a [bool] indicating if the device could not be
+  /// queried. The map contains the size of the fingerprint data, and the
+  /// fingerprint data itself as a [Uint8List].
   Future<dynamic> getFingerprint(int uid) => Fingerprint.get(this, uid);
 
   /// Retrieves all users from the device.

@@ -443,6 +443,21 @@ class Util {
     }
   }
 
+  /// Receives data from the device.
+  ///
+  /// The method sends a command to the device to receive data. The device
+  /// must be connected and authenticated before this method can be used.
+  ///
+  /// The method returns a [Future] that completes with a [Uint8List] containing
+  /// the received data, or [null] if no data was received or if the device
+  /// could not be queried.
+  ///
+  /// The [first] parameter is a [bool] indicating if this is the first time
+  /// this method is called for the current command. If [first] is [true],
+  /// the method sends a command to the device to receive data. If [first] is
+  /// [false], the method does not send a command to the device and instead
+  /// waits for the device to send data. The default value of [first] is
+  /// [true].
   static Future<Uint8List?> recData(ZKTeco self, {bool first = true}) async {
     int? bytes = getSize(self);
 
@@ -453,6 +468,20 @@ class Util {
     return await _parseData(self, bytes, first);
   }
 
+  /// Parses the received data from the device.
+  ///
+  /// The method takes a [ZKTeco] object, the number of bytes to receive, and
+  /// a [bool] indicating if this is the first time this method is called for
+  /// the current command as parameters. If [first] is [true], the method
+  /// expects the first 8 bytes of the received data to be a header, and
+  /// skips the header. If [first] is [false], the method does not skip the
+  /// header.
+  ///
+  /// The method returns a [Future] that completes with a [Uint8List]
+  /// containing the received data. The [Future] completes when all expected
+  /// data has been received, or when the device stops sending data. If the
+  /// device stops sending data before all expected data has been received,
+  /// the [Future] completes with the data that has been received so far.
   static Future<Uint8List> _parseData(
       ZKTeco self, int bytes, bool first) async {
     BytesBuilder data = BytesBuilder();
@@ -476,10 +505,23 @@ class Util {
     return data.takeBytes();
   }
 
+  /// Prints a debug message indicating how many bytes have been received so
+  /// far, out of the total number of bytes expected.
+  ///
+  /// The method takes a [ZKTeco] object, the number of bytes received so far,
+  /// and the total number of bytes expected as parameters. The method
+  /// prints a message to the console in the format "Received $received bytes
+  /// out of $total bytes".
   static void logReceived(ZKTeco self, int received, int total) {
     debugPrint('Received $received bytes out of $total bytes');
   }
 
+  /// Converts a hexadecimal string to a [Uint8List] of bytes.
+  ///
+  /// The method takes a [String] as input, which must have an even length.
+  /// The method throws an [ArgumentError] if the input string has an odd
+  /// length. The method returns a [Uint8List] containing the bytes equivalent
+  /// to the input hexadecimal string.
   static Uint8List hex2bin(String hex) {
     if (hex.length % 2 != 0) {
       throw ArgumentError("Hex string must have an even length.");
@@ -494,6 +536,15 @@ class Util {
     return bytes;
   }
 
+  /// Converts a [Uint8List] of bytes to a hexadecimal string.
+  ///
+  /// The method takes a [Uint8List] as input and returns a string in which
+  /// each byte is converted to a 2-character hexadecimal string using
+  /// [int.toRadixString] with radix 16, and then padded with leading zeros
+  /// to a length of 2 characters. The resulting strings are then joined
+  /// together into a single string with no separator. For example, if
+  /// [bytes] is `Uint8List.fromList([1, 2, 3, 4])`, this method returns
+  /// `"01020304"`.
   static String byteToHex(Uint8List bytes) {
     return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
   }

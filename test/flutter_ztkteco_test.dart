@@ -122,9 +122,17 @@ void main() async {
     await fingerMachine.initSocket();
     await fingerMachine.connect();
     List<AttendanceLog> logs = await fingerMachine.getAttendanceLogs();
-
     // ignore: unnecessary_type_check
     expect(logs is List<AttendanceLog>, true);
+    await fingerMachine.disconnect();
+  });
+
+  test('test voice', () async {
+    final fingerMachine = ZKTeco("10.7.0.53");
+    await fingerMachine.initSocket();
+    await fingerMachine.connect();
+    dynamic platform = await fingerMachine.testVoice();
+    expect(platform is String, true);
     await fingerMachine.disconnect();
   });
 }

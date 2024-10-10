@@ -20,7 +20,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_zkteco: ^1.0.0
+  flutter_zkteco: ^1.0.2
 ```
 
 Then run:
@@ -48,7 +48,7 @@ import 'package:flutter_zkteco/flutter_zkteco.dart';
 
 ```dart
 // Create an instance of the ZKTeco class
-ZKTeco fingerprintMachine = ZKTeco('192.168.1.201', port: 4370);
+ZKTeco fingerprintMachine = ZKTeco('192.168.1.201', port: 4370, timeout: Duration(seconds: 10));
 
 // Initialize the connection
 bool isConnected = await fingerprintMachine.connect();
@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ### `ZKTeco`
 
-- `ZKTeco(String ipAddress,{int port = 4370})`
+- `ZKTeco(String ipAddress,{int port = 4370, Duration? timeout})`
   - Creates an instance of the fingerprint machine with the specified IP address and port.
 
 - `Future<bool> connect()`

@@ -47,9 +47,9 @@ class Attendance {
             .decode(Util.hex2bin(u.substring(8, 18)), allowMalformed: true)
             .split('\x00');
         int state = int.parse(u.substring(56, 58), radix: 16);
-        String timestamp =
-            Util.decodeTime(int.parse(Util.reverseHex(u.substring(58, 66))));
-        int type = int.parse(Util.reverseHex(u.substring(66, 68)));
+        String timestamp = Util.decodeTime(
+            int.parse(Util.reverseHex(u.substring(58, 66)), radix: 16));
+        int type = int.parse(Util.reverseHex(u.substring(66, 68)), radix: 16);
 
         final Map<String, dynamic> data = {
           'uid': uid,

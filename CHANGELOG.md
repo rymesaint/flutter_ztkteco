@@ -1,3 +1,7 @@
+## 1.0.2
+
+* Fix [FormatException: Invalid radix-10 number](https://github.com/rymesaint/flutter_ztkteco/issues/3)
+
 ## 1.0.1
 
 * Fix wrong return date time from machine

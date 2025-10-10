@@ -43,6 +43,18 @@ flutter pub get
 - iOS
 - Web (TBD)
 - Windows
+- MacOS
+
+#### MacOS
+Add 
+```
+	<key>com.apple.security.network.client</key>
+    <true/>
+```
+in your
+macos/Runner/DebugProfile.entitlements
+macos/Runner/Release.entitlements
+files
 
 ### Usage
 
@@ -133,6 +145,10 @@ print('Disconnected from the fingerprint machine.');
 - `UserType role`
 - `String password`
 - `int cardNo`
+
+## Device Configuration
+
+- **ZKTeco K60**: Requires Password to be set to: `0`
 
 ## Troubleshooting
 

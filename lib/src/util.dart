@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_zkteco/flutter_zkteco.dart';
 import 'package:flutter_zkteco/src/error/zk_error_connection.dart';
@@ -820,28 +821,26 @@ class Util {
   /// The method takes an IP address as input and returns a [Future] that
   /// completes with [true] if the device was reachable and [false] otherwise.
   ///
-  /// The method uses the `ping` command to send a single packet to the
-  /// device. The device is considered reachable if the command returns an
-  /// exit code of 0. If the command fails or returns a non-zero exit code,
-  /// the device is considered unreachable.
+  /// The method uses the dart_ping library to send a single ICMP echo request
+  /// to the device. The device is considered reachable if a successful response
+  /// is received. If the ping fails or times out, the device is considered
+  /// unreachable.
   ///
-  /// The method uses the Windows version of the `ping` command on Windows
-  /// and the Unix version on other platforms.
+  /// This method is platform-independent and doesn't rely on system ping commands.
   static Future<bool> testPing(String ip) async {
-    List<String> args;
-    bool useShell = false;
-
-    if (Platform.isWindows) {
-      args = ['-n', '1', ip];
-    } else {
-      args = ['-c', '1', '-W', '5', ip];
-      useShell = true;
-    }
-
     try {
-      ProcessResult result =
-          await Process.run('ping', args, runInShell: useShell);
-      return result.exitCode == 0;
+      final ping = Ping(ip, count: 1, timeout: 5);
+
+      await for (final PingData data in ping.stream) {
+        if (data.response != null) {
+          // We received a successful response
+          ping.stop();
+          return true;
+        }
+      }
+
+      // If we exit the stream without a response, the ping failed
+      return false;
     } catch (e) {
       return false;
     }

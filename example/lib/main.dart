@@ -71,10 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
         btnMessage = 'Connecting...';
       });
       fingerprintMachine = ZKTeco(ipAdress.text,
-          port: int.parse(port.text),
-          debug: true,
-          tcp: useTcp,
-          timeout: Duration(seconds: 20));
+        port: int.parse(port.text),
+        debug: true,
+        tcp: useTcp,
+        timeout: Duration(seconds: 20),
+        // password: 0, // ZKTeco K60 uses password: 0
+      );
       final connect = await fingerprintMachine?.connect();
       if (connect == true) {
         setState(() {
@@ -87,7 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
           isConnected = connect ?? false;
         });
       }
-    } catch (e) {
+    } catch (e, trace) {
+      debugPrint(e.toString());
       setState(() {
         btnMessage = 'Connect';
         isConnected = false;
